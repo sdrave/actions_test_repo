@@ -2,19 +2,18 @@ on:
   pull_request_target:
     types:
       - opened
-    branches:
-      - '*:**'
 
 jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
+        if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
         with:
           script: |
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `This is a test!`
+              body: `This is a test! ${{github.event.pull_request.head.repo.owner.login}}`
             })
