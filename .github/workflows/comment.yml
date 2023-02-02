@@ -2,8 +2,8 @@ on:
   pull_request_target:
     types:
       - opened
-    branches-ignore:
-      - '*'
+    branches:
+      - '*:**'
 
 jobs:
   welcome:
