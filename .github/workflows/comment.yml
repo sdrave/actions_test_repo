@@ -1,5 +1,5 @@
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - synchronize
@@ -25,13 +25,7 @@ jobs:
       - uses: actions/checkout@v3
         if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
       - run: |
-          date > generated.txt
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
-          git commit -m "generated"
-          git push
-          # git config user.name github-actions
-          # git config user.email github-actions@github.com
-          # git push origin HEAD:_ext_pr_some_id
+          git push origin HEAD:_ext_pr_some_id
         if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
