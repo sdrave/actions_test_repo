@@ -23,9 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
         if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git push origin HEAD:_ext_pr_some_id
+          git push --force origin HEAD:_ext_pr_some_id
         if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
