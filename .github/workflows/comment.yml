@@ -1,7 +1,8 @@
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
+      - synchronize
 
 jobs:
   welcome:
@@ -17,3 +18,23 @@ jobs:
               repo: context.repo.repo,
               body: `This is a test! ${{github.event.pull_request.head.repo.owner.login}}`
             })
+
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `This is a test! ${{github.event.pull_request.head.repo.owner.login}}`
+            })
+      - run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git push origin HEAD:_ext_pr_some_id
+        if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
