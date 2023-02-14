@@ -4,3 +4,5 @@ External feature 2
 External feature 2, second part
 
 External feature 2, third part
+
+External feature 2, fourth part
