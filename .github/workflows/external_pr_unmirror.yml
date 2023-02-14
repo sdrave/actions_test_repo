@@ -7,7 +7,7 @@ on:
 
 jobs:
   delete_branch:
-    if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }}
+    if: github.event.pull_request.head.repo.owner.login != 'pymor'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
 
   comment:
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.head.repo.owner.login != 'pymor' }} && ${{ github.event.action == 'opened' }}
+    if: github.event.pull_request.head.repo.owner.login != 'pymor'
     steps:
       - uses: actions/github-script@v6
         with:
